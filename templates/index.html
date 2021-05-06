@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        .title{
+            text-align: center;
+            width: 1000px;
+            height: 120px;
+            background: px;
+            margin: 0 auto;
+        }
+        .color{
+            color: white;
+        }
+         .color2{
+            color: crimson;
+        }
+        .parent{
+            text-align: center;
+            width: 1000px;
+            height: 1000px;
+            background: px;
+            margin: 0 auto;
+        }
+        .child{
+            width: 400px;
+            height: 150px;
+            background: ivory;
+            margin: 0 auto;
+        }
+    </style>
+    <title>主页</title>
+</head>
+<body background="http://47.102.215.61:8080/media/th.jpg">
+<form method="post">
+    {% csrf_token %}
+    <div class="title color">
+        <h1>自然语言处理</h1>
+        <h1>Natural Language Processing</h1>
+    </div>
+    <div class="parent">
+        <br>
+        <textarea  name="sentences" class="child" style="border-radius: 15px"></textarea><br>
+        <input type="submit" value="提交" ><br>
+    {% if msg %}
+        <div class="child" style="border-radius: 15px">
+            {{ msg }}
+        </div>
+    {% endif %}
+        {% if original_sentence %}
+        <div class="child" style="border-radius: 15px">
+        {% if lst %}
+            <div class="demo"></div>
+            <script>
+                var s = '{{ original_sentence }}';
+                var a = {{ lst }};
+                function changeColor (str, arr) {
+                    var strHtml = '';
+                    for (var i = 0; i < str.length; i ++){
+                        var key = true;
+                        for (var j = 0; j < arr.length; j++){
+                            if (i === arr[j]){
+                                strHtml += '<span style="color:red">'+ str[i] +'</span>';
+                                key = false;
+                                break;
+                            }
+                        }
+                        if (key) {
+                            strHtml += str[i];
+                        }
+                    }
+                    var oDiv = document.getElementsByClassName('demo')[0];
+                    oDiv.innerHTML = strHtml;
+                }
+                 changeColor(s, a);
+            </script>
+        {% else %}
+            {{ original_sentence }}<br>
+        {% endif %}
+        {{ corrected_sentence }}
+        </div>
+    {% endif %}
+    </div><br>
+<br>
+</form>
+</body>
+</html>
